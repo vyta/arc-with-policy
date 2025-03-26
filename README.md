@@ -1,6 +1,6 @@
-# Scale with Azure Arc
+# POC - Scale with Azure Arc
 
-This project provides infrastructure as code (IaC) and scripts to deploy and manage Azure Arc-enabled machines with automated K3s installation.
+This project provides infrastructure as code (IaC) and scripts to deploy and manage Azure Arc-enabled machines with automated K3s installation. The contents of this project is for POC purposes only.
 
 ## Prerequisites
 
