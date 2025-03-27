@@ -47,8 +47,12 @@ ARC_SUBSCRIPTION_ID=$(az account show --query id -o tsv)
 ARC_TENANT_ID=$(az account show --query tenantId -o tsv)
 
 az group create -n fake-edge -l $LOCATION
+
+# Creates a VM w/ either an existing SSH pub key or generates a new one
 fake-edge/create-new-vm.sh --resource-group fake-edge --arc-resource-group $ARC_RESOURCE_GROUP
 ```
+
+SSH command is provided as an output of the script allowing you to easily login to the machine to verify.
 
 ## Troubleshooting
 
