@@ -5,7 +5,7 @@ param adminUsername string = 'arctestadmin'
 param adminSshPublicKey string
 
 @description('Name for the Virtual Machine')
-param vmName string = 'arc-test-vm'
+param vmName string = '${resourceGroup().name}-vm'
 
 @description('VM Size')
 param vmSize string = 'Standard_D2s_v3'
@@ -14,23 +14,23 @@ param vmSize string = 'Standard_D2s_v3'
 param location string = resourceGroup().location
 
 @description('Virtual Network Name')
-param vnetName string = 'arc-test-vnet'
+param vnetName string = '${resourceGroup().name}-vnet'
 
 @description('Address Prefix')
 param addressPrefix string = '10.0.0.0/16'
 
 @description('Subnet Name')
-param subnetName string = 'arc-test-subnet'
+param subnetName string = '${resourceGroup().name}-subnet'
 
 @description('Subnet Prefix')
 param subnetPrefix string = '10.0.0.0/24'
 
 @description('Network Security Group Name')
-param nsgName string = 'arc-test-nsg'
+param nsgName string = '${resourceGroup().name}-nsg'
 
 @description('Configuration for Azure Arc onboarding')
 param arcOnboardingConfig object = {
-  resourceGroup: 'arc-test'
+  resourceGroup: ''
   subscriptionId: subscription().subscriptionId
   tenantId: subscription().tenantId
 }

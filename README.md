@@ -20,9 +20,13 @@ Let's create a policy that deploys a Custom Script that installs a K3s cluster o
 
 ```bash
 LOCATION=<location>
+ARC_RESOURCE_GROUP=<arc-resource-group-name>
+
 # Note: Policy definition is created at subscription level
 policyDefinitionId=$(az deployment sub create --location $LOCATION --template-file cloud/policy-definition.bicep --query 'properties.outputs.policyDefinitionId.value' -o tsv)
-az deployment group create -g arc-test --template-file cloud/policy-assignment.bicep --parameters policyDefinitionId=$policyDefinitionId
+
+az group create -n $ARC_RESOURCE_GROUP -l $LOCATION
+az deployment group create -g $ARC_RESOURCEGROUP --template-file cloud/policy-assignment.bicep --parameters policyDefinitionId=$policyDefinitionId
 ```
 
 ### Edge: Deploy the Arc Connected Machine
@@ -39,8 +43,11 @@ For your convenience, I've provided some approximate completion times for variou
 ```bash
 az login
 az account set --subscription <SUBSCRIPTION_ID>
+ARC_SUBSCRIPTION_ID=$(az account show --query id -o tsv)
+ARC_TENANT_ID=$(az account show --query tenantId -o tsv)
+
 az group create -n fake-edge -l $LOCATION
-fake-edge/create-new-vm.sh --resource-group fake-edge
+fake-edge/create-new-vm.sh --resource-group fake-edge --arc-resource-group $ARC_RESOURCE_GROUP
 ```
 
 ## Troubleshooting
