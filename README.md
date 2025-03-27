@@ -1,6 +1,10 @@
-# POC - Scale with Azure Arc
+# Scale with Azure Arc
 
-This project provides infrastructure as code (IaC) and scripts to deploy and manage Azure Arc-enabled machines with automated K3s installation. The contents of this project is for POC purposes only.
+**The contents of this project is for POC purposes only.**
+
+This project provides infrastructure as code (IaC) and scripts to deploy and manage Azure Arc-enabled machines with automated K3s installation.
+
+Arc extends Azure capabilities to manage hybrid and multi-cloud environments. One of those capabilities is governance with [Azure Policies](https://learn.microsoft.com/en-us/azure/governance/policy/), which allow you to manage resources and enforce compliance across your Azure environment. 
 
 ## Prerequisites
 
@@ -12,6 +16,8 @@ This project provides infrastructure as code (IaC) and scripts to deploy and man
 
 ### Cloud: Deploy the Policy Definition and Assignment
 
+Let's create a policy that deploys a Custom Script that installs a K3s cluster onto any Arc connected machine.
+
 ```bash
 LOCATION=<location>
 # Note: Policy definition is created at subscription level
@@ -21,7 +27,12 @@ az deployment group create -g arc-test --template-file cloud/policy-assignment.b
 
 ### Edge: Deploy the Arc Connected Machine
 
-Approximate duration:
+Now, let's validate this works by creating a new Arc connected machine. Since, Azure VMs are already connected to Azure, this next step performs the steps necessary to prep the VM for Arc before proceeding to onboard the machine.
+
+Once connected, the policy kicks in and creates the extension which installs K3s on the Arc connected machine.
+
+For your convenience, I've provided some approximate completion times for various steps:
+
 - VM creation to k3s install: 5 minutes
 - Arc connecttion to k3s install: 2 minutes
 
